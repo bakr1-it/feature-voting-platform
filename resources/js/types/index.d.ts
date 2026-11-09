@@ -6,6 +6,27 @@ export interface User {
     email: string;
     email_verified_at?: string;
 }
+export type PaginateData <T> =  {
+    data:T[];
+    links:LinkType,
+
+
+}
+
+
+type LinkType ={
+    first:string,
+    last:string,
+    prev:string | null,
+    next:string | null,
+}
+export type Feature={
+    id:string,
+    name:string,
+    description:string,
+    user:User
+
+}
 
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
