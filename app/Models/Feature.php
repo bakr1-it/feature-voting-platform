@@ -9,7 +9,7 @@ class Feature extends Model
 {
     use HasFactory;
     public $timestamps = false;
-protected $fillable = ["name","user_id","description"];
+protected $fillable = ["name","user_id","upvote","description"];
 public function comments(){
     return $this->hasMany(Comment::class);
 }

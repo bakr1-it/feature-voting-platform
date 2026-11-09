@@ -1,4 +1,5 @@
 import { Feature } from "@/types";
+import { Link } from "@inertiajs/react";
 import { useState } from "react";
 
 
@@ -31,11 +32,20 @@ export default function FeatureItems({feature}:{feature:Feature}) {
 
                             </div>
                             <div className="info-feature space-y-4">
-                                <h1>{feature.name}</h1>
-                                <p>{isShowMore ? feature.description : feature.description.slice(0,100) + "...."}</p>
+                                <Link href={route("feature.show",feature)}>
+                                {feature.name}
+                                </Link>
+                                {feature.description?.length > 200 && (
+                                    <>
+<p>{isShowMore ? feature.description : feature.description.slice(0,100) + "...."}</p>
                                 <button onClick={toggleShowMore} className="text-amber-500 cursor-pointer capitalize hover:text-amber-300">
                                     {isShowMore ?"read less" :"read more"}
                                 </button>
+
+                                    </>
+
+                                )}
+                                {feature.description?.length < 200 &&  <p>{feature.description}</p> }
                             </div>
 
 
