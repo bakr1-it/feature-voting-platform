@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UpvoteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,6 +27,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get("feature",[FeatureController::class,"index"])->name("feature.index");
     Route::resource("feature",FeatureController::class);
+    Route::post("upvotedUpDown/{feature}",[UpvoteController::class,"store"])->name("upvote.store");
+    Route::delete("upvotedUpDown/delete/{feature}",[UpvoteController::class,"destroy"])->name("upvote.delete");
 });
 
 require __DIR__.'/auth.php';

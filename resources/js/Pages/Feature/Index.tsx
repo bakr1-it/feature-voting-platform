@@ -4,7 +4,7 @@ import { Feature, PaginateData } from '@/types';
 import FeatureItems from '@/Components/App/FeatureItems';
 import PrimaryButton from '@/Components/PrimaryButton';
 export default function Index({features}:{features:PaginateData<Feature>}) {
-  return (
+    return (
           <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
