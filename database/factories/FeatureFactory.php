@@ -22,7 +22,6 @@ class FeatureFactory extends Factory
             "name"=>fake()->text(),
             "description"=>fake()->text(200),
             "user_id"=>User::first()->id,
-            "upvote"=>fake()->boolean()
         ];
     }
 }

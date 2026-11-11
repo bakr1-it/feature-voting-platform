@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId("feature_id")->constrained("features","id");
             $table->foreignId("user_id")->constrained("users","id");
+                        $table->boolean("upvote");
+
         });
     }
 

@@ -24,7 +24,10 @@ export type Feature={
     id:string,
     name:string,
     description:string,
-    user:User
+    user:User,
+    up_votes_count:number,
+    user_downVote:boolean,
+    user_upVote:boolean
 
 }
 

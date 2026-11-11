@@ -17,7 +17,6 @@ return new class extends Migration
             $table->longText("description");
             $table->foreignId("user_id")->constrained("users","id");
 
-            $table->boolean("upvote");
         });
     }
 

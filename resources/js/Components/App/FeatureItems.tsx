@@ -14,16 +14,16 @@ export default function FeatureItems({feature}:{feature:Feature}) {
          <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 mb-4">
                         <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8">
                             <div className="icon-upMove number flex flex-col items-center">
-                                <button>
+                                <button className={`${feature.user_upVote ?"text-amber-600" :""}`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-12">
                                          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
                                     </svg>
 
                                 </button>
                                 <span>
-                                    12
+                                    {feature.up_votes_count}
                                 </span>
-                                <button>
+                                <button className={`${feature.user_downVote ?"text-amber-600" :""}`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-12">
                                          <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                                     </svg>

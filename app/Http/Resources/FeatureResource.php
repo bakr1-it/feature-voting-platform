@@ -20,6 +20,10 @@ class FeatureResource extends JsonResource
             "name"=>$this->name,
             "description"=>$this->description,
             "user"=>new UsersResource($this->user),
+            "up_votes_count"=>$this->up_votes_count ?? 0,
+            "user_upVote"=>$this->user_upVote,
+            "user_downVote"=>$this->user_downVote,
+
 
         ];
     }
