@@ -1,9 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { Feature, PaginateData } from '@/types';
 import FeatureItems from '@/Components/App/FeatureItems';
 import PrimaryButton from '@/Components/PrimaryButton';
-export default function Index({features}:{features:PaginateData<Feature>}) {
+export default function Index({features,canCreate}:{features:PaginateData<Feature>,canCreate:boolean}) {
+console.log(features)
     return (
           <AuthenticatedLayout
             header={
@@ -15,7 +16,7 @@ export default function Index({features}:{features:PaginateData<Feature>}) {
             <Head title="Features" />
              <Link href={route("feature.create")}>
 
-             <PrimaryButton className='my-4 mb-6'>Create New Feature</PrimaryButton>
+            {canCreate && <PrimaryButton className='my-4 mb-6'>Create New Feature</PrimaryButton>}
              </Link>
 
 

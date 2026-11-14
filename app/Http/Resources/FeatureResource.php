@@ -23,6 +23,12 @@ class FeatureResource extends JsonResource
             "up_votes_count"=>$this->up_votes_count ?? 0,
             "user_upVote"=>$this->user_upVote,
             "user_downVote"=>$this->user_downVote,
+            "can"=>[
+                "update"=>$request->user()?->can("update",$this->resource) ?? false,
+                "delete"=>$request->user()?->can("delete",$this->resource) ?? false,
+                "comment"=>$request->user()?->can("comment",$this->resource) ?? false,
+            ],
+
 
 
         ];

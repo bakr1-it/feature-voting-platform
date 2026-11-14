@@ -48,7 +48,7 @@ export default function Create() {
                                            <InputError className="mt-2" message={errors.name} />
                                        </div>
                                       <div className='my-6'>
-                                           <InputLabel htmlFor="Description" value="Name" />
+                                           <InputLabel htmlFor="Description" value="Description" />
 
                                            <TeaxtAreaInput
                                                id="name"

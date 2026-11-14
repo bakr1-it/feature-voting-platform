@@ -1,8 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { Feature } from '@/types';
+import { Comments, Feature } from '@/types';
 import UpDownVote from '@/Components/App/UpDownVote';
-export default function show({feature}:{feature:Feature}) {
+import CommentItems from '@/Components/App/CommentItems';
+import CommentCreateForm from '@/Components/App/CommentCreateForm';
+export default function show({feature , comments}:{feature:Feature,comments:Comments[]}) {
 
 
     return (
@@ -15,22 +17,24 @@ export default function show({feature}:{feature:Feature}) {
         >
             <Head title={"feature "+ '-' +feature.name }    />
 
-  <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 mb-4">
-                        <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8">
-                        <UpDownVote feature={feature}/>
-                            <div className="info-feature space-y-4">
-                               <h1>
-                                {feature.name}
-                                </h1>
+  <div className="mb-4 overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
+        <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8">
+          <UpDownVote feature={feature} />
+          <div className="flex-1">
+            <h2 className="text-2xl mb-2">{feature.name}</h2>
+            <p>{feature.description}</p>
 
-                                <p>{ feature.description }</p>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
+            {feature.can.comment && <>
+              <CommentCreateForm feature={feature} />
+            {comments && <div className="mt-8">
+              {comments.map(comment => (
+                  <CommentItems comment={comment} key={comment.id} />
+                ))}
+            </div>}
+                </>}
+          </div>
+        </div>
+      </div>
 
         </AuthenticatedLayout>
   )

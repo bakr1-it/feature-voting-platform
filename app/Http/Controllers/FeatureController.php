@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\FeatureResource;
+use App\Http\Resources\UsersResource;
 use App\Models\Feature;
 use App\Models\Upvotes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 
@@ -16,7 +18,7 @@ class FeatureController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $currentUserId=Auth::id();
 
@@ -42,7 +44,8 @@ class FeatureController extends Controller
         ->paginate();
 
         return Inertia::render("Feature/Index",[
-            "features"=>FeatureResource::collection($features)
+            "features"=>FeatureResource::collection($features),
+            "canCreate"=>$request->user()?->can("create",Feature::class) ?? false
         ]);
     }
 
@@ -59,6 +62,7 @@ class FeatureController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize("create",Feature::class);
        $data= $request->validate([
             "name"=>["string","required","min:1"],
             "description"=>["nullable","string"],
@@ -84,9 +88,16 @@ return Inertia::render("Feature/create");
         $feature->up_votes_count= Upvotes::where('feature_id', $feature->id)
             ->sum(DB::raw('CASE WHEN upvote = 1 THEN 1 ELSE -1 END'));
 
+        return Inertia::render("Feature/Show",[
+            "feature"=>new FeatureResource($feature),
+            "comments"=>$feature->comments()->latest()->with("user")->get()->map(fn($comment)=>[
+                "id"=>$comment->id,
+                "comment"=>$comment->comment,
+                "created_at"=>$comment->created_at,
+                "user"=> new UsersResource($comment->user),
+            ])
 
-
-        return Inertia::render("Feature/Show",["feature"=>new FeatureResource($feature)]);
+        ]);
 
     }
 
@@ -105,6 +116,7 @@ return Inertia::render("Feature/create");
      */
     public function update(Request $request, Feature $feature)
     {
+        Gate::authorize("update",$feature);
            $data= $request->validate([
             "name"=>["string","required","min:1"],
             "description"=>["nullable","string"],
@@ -119,6 +131,7 @@ return Inertia::render("Feature/create");
      */
     public function destroy(Feature $feature)
     {
+        Gate::authorize("delete",$feature);
         $deleted= $feature->delete();
         if($deleted)
             return to_route("feature.index")->with("success","delete feature is success");

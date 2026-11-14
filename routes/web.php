@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UpvoteController;
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::resource("feature",FeatureController::class);
     Route::post("upvotedUpDown/{feature}",[UpvoteController::class,"store"])->name("upvote.store");
     Route::delete("upvotedUpDown/delete/{feature}",[UpvoteController::class,"destroy"])->name("upvote.delete");
+    Route::post("comment/create/{feature}",[CommentController::class,"store"])->name("comment.store");
 });
 
 require __DIR__.'/auth.php';

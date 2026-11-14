@@ -11,7 +11,7 @@ class Feature extends Model
     public $timestamps = false;
 protected $fillable = ["name","user_id","upvote","description"];
 public function comments(){
-    return $this->hasMany(Comment::class);
+    return $this->hasMany(Comment::class)->latest();
 }
 public function user(){
     return $this->belongsTo(User::class);
