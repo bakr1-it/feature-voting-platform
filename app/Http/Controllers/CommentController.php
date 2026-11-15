@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\PermissionEnum;
 use App\Models\Comment;
 use App\Models\Feature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use NunoMaduro\Collision\Adapters\Phpunit\Support\ResultReflection;
 
 class CommentController extends Controller
 {
@@ -31,6 +33,13 @@ return back();
 
     public function destroy(Comment $comment)
     {
-        //
+        if($comment->user_id !== Auth::id() && !Auth::user()->can(PermissionEnum::ManageFeatures->value)){
+            abort(403);
+        }
+        $comment->delete();
+        return back();
+
+
     }
+
 }

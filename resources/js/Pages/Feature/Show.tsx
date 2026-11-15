@@ -24,14 +24,14 @@ export default function show({feature , comments}:{feature:Feature,comments:Comm
             <h2 className="text-2xl mb-2">{feature.name}</h2>
             <p>{feature.description}</p>
 
-            {feature.can.comment && <>
+            {feature.can.comment &&
               <CommentCreateForm feature={feature} />
+            }
             {comments && <div className="mt-8">
               {comments.map(comment => (
-                  <CommentItems comment={comment} key={comment.id} />
+                  <CommentItems comment={comment} key={comment.id} feature={feature} />
                 ))}
             </div>}
-                </>}
           </div>
         </div>
       </div>

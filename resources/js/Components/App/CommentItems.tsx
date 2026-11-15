@@ -1,6 +1,12 @@
-import { Comments } from "@/types";
+import { Comments, Feature } from "@/types";
+import { useForm } from "@inertiajs/react";
 
-export default function CommentItems({comment}:{comment:Comments}) {
+export default function CommentItems({comment , feature}:{comment:Comments , feature:Feature}) {
+const formDelete = useForm();
+const deleteCommit = ()=>{
+formDelete.delete(route("comment.destroy",comment.id));
+}
+
   return (
    <div className="flex gap-4 mb-3">
       <div className="w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center">
@@ -17,7 +23,8 @@ export default function CommentItems({comment}:{comment:Comments}) {
         </h3>
         <div className="italic mt-1">{comment.comment}</div>
       </div>
-        <button >
+      {feature.can.delete &&
+        <button onClick={deleteCommit}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                stroke="currentColor" className="size-4">
             <path strokeLinecap="round" strokeLinejoin="round"
@@ -25,6 +32,7 @@ export default function CommentItems({comment}:{comment:Comments}) {
           </svg>
 
         </button>
+                }
     </div>
   )
 }

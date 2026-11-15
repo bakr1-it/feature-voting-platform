@@ -93,7 +93,7 @@ return Inertia::render("Feature/create");
             "comments"=>$feature->comments()->latest()->with("user")->get()->map(fn($comment)=>[
                 "id"=>$comment->id,
                 "comment"=>$comment->comment,
-                "created_at"=>$comment->created_at,
+                "created_at"=>$comment->created_at->diffForHumans(),
                 "user"=> new UsersResource($comment->user),
             ])
 
