@@ -122,8 +122,8 @@ return Inertia::render("Feature/create");
             "description"=>["nullable","string"],
         ]);
 
-       $updated=  $feature->update($data);
-        return response()->json(["update"=>"success"],204);
+        $feature->update($data);
+        return to_route("feature.edit",$feature);
     }
 
     /**

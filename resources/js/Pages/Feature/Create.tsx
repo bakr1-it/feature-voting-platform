@@ -4,7 +4,6 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Description } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
 import { SyntheticEvent } from 'react';
 export default function Create() {
