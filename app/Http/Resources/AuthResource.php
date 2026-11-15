@@ -19,8 +19,9 @@ class AuthResource extends JsonResource
             "id"=>$this->id,
             "name"=>$this->name,
             "email"=>$this->email,
+            "created_at"=>$this->created_at->format("Y-m-d"),
             "permissions"=>$this->getAllPermissions()->map(fn($premission)=>$premission->name),
-            "role"=>$this->getRoleNames(),
+            "roles"=>$this->getRoleNames(),
         ];;
     }
 }

@@ -4,11 +4,12 @@ export interface User {
     id: number;
     name: string;
     email: string;
+    created_at:string,
 }
 export interface AuthUser extends User {
     email_verified_at: string;
     permissions:string[],
-    role:string[]
+    roles:string[]
 }
 export type PaginateData <T> =  {
     data:T[];
