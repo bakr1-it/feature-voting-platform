@@ -16,7 +16,7 @@ export default function Create() {
     })
     const handelSubmitForm = (ev:SyntheticEvent)=>{
     ev.preventDefault();
-    post(route("feature.store",data),{
+    post(route("feature.store"),{
         preserveScroll:true,
         onSuccess :()=>{
             setIsShowToast(true);
@@ -58,7 +58,7 @@ export default function Create() {
                                            <InputLabel htmlFor="Description" value="Description" />
 
                                            <TeaxtAreaInput
-                                               id="name"
+                                               id="Description"
                                                className="mt-1 block w-full"
                                                value={data.description}
                                                row={4}

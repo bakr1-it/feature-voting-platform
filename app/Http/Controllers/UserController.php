@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function index(){
         return Inertia::render("user/Index",[
-            "users"=> AuthResource::collection(User::all())->collection->toArray()
+            "users"=> AuthResource::collection(User::with(["roles","permissions"])->get())->collection->toArray()
         ]);
 
     }

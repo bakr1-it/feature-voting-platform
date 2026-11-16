@@ -51,7 +51,7 @@ export default function Index({ users}: PageProps<{ users: AuthUser[] }>) {
               {user.roles}
             </td>
             <td className="px-6 py-4">
-              <Link href={route('user.edit', user.id)} className="text-blue-500">
+              <Link prefetch href={route('user.edit', user.id)} className="text-blue-500">
                 Edit
               </Link>
             </td>

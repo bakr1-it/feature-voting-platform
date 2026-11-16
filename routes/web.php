@@ -21,7 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get("feature",[FeatureController::class,"index"])->name("feature.index");
     Route::resource("feature",FeatureController::class);
     Route::post("upvotedUpDown/{feature}",[UpvoteController::class,"store"])->name("upvote.store");
     Route::delete("upvotedUpDown/delete/{feature}",[UpvoteController::class,"destroy"])->name("upvote.delete");

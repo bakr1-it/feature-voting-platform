@@ -34,6 +34,7 @@ export default function Authenticated({
                                     Dashboard
                                 </NavLink>
                                 <NavLink
+                                prefetch
                                     href={route('feature.index')}
                                     active={route().current('feature.index')}
                                 >
@@ -41,6 +42,7 @@ export default function Authenticated({
                                 </NavLink>
                                 {user.roles.includes("admin") &&
                                 <NavLink
+                                prefetch
                                 href={route('user.index')}
                                 active={route().current('user.index')}
                                 >

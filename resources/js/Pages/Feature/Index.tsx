@@ -5,7 +5,7 @@ import FeatureItems from '@/Components/App/FeatureItems';
 import PrimaryButton from '@/Components/PrimaryButton';
 import Toast from '@/Components/App/Toast';
 import { useEffect, useState } from 'react';
-export default function Index({features,canCreate,page}:{features:Feature[] ,canCreate:boolean,page:number}) {
+export default function Index({features,canCreate,page,lastPage}:{features:Feature[] ,canCreate:boolean,page:number,lastPage:number}) {
     const {flash}=usePage().props;
     const [isShowToast,setIsShowToast]=useState(false);
 useEffect(()=>{
@@ -29,25 +29,26 @@ setIsShowToast(true);
              </Link>
 
 
-                    {features.map((f)=> <FeatureItems feature={f}/>)}
-
+                    {features.map((f)=> <FeatureItems key={f.id} feature={f}/>)}
+                    {page < lastPage &&
                     <WhenVisible
-                     data={["features","page"]}
-                     params={{
+                    data={["features","page"]}
+                    params={{
                         data:{page:page+1},
                         preserveUrl:true
 
-                     }}
-                      fallback={<div>Loading ...... </div>}
-                      always
-                      buffer={400}
+                    }}
+                    fallback={<div>Loading ...... </div>}
+                    always
+                    buffer={400}
 
-                      >
+                    >
 <>
 </>
 
                     </WhenVisible>
 
+                    }
 
         </AuthenticatedLayout>
   )

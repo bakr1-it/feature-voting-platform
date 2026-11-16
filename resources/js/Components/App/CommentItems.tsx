@@ -1,7 +1,7 @@
 import { Comments, Feature } from "@/types";
 import { useForm } from "@inertiajs/react";
 
-export default function CommentItems({comment , feature}:{comment:Comments , feature:Feature}) {
+export default function CommentItems({comment }:{comment:Comments }) {
 const formDelete = useForm();
 const deleteCommit = ()=>{
 formDelete.delete(route("comment.destroy",comment.id));
@@ -23,7 +23,7 @@ formDelete.delete(route("comment.destroy",comment.id));
         </h3>
         <div className="italic mt-1">{comment.comment}</div>
       </div>
-      {feature.can.delete &&
+      {comment.can_delete &&
         <button onClick={deleteCommit}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                stroke="currentColor" className="size-4">

@@ -17,7 +17,7 @@ export default function FeatureItems({feature}:{feature:Feature}) {
                         <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8">
                         <UpDownVote feature={feature}/>
                             <div className="info-feature space-y-4 flex-1">
-                                <Link href={route("feature.show",feature)}>
+                                <Link prefetch href={route("feature.show",feature)}>
                                 {feature.name}
                                 </Link>
                                 {feature.description?.length > 200 && (
@@ -30,7 +30,7 @@ export default function FeatureItems({feature}:{feature:Feature}) {
                                     </>
 
                                 )}
-                                {feature.description?.length < 200 &&  <p>{feature.description}</p> }
+                                {feature.description?.length <= 200 &&  <p>{feature.description}</p> }
 
                                   <div className="py-4">
             <Link prefetch href={route('feature.show', feature)}
@@ -38,7 +38,7 @@ export default function FeatureItems({feature}:{feature:Feature}) {
               Comments
             </Link>
           </div>
-                
+
         </div>
         <div>
             {feature.can.delete && <FeatureActionsDropdown feature={feature} /> }

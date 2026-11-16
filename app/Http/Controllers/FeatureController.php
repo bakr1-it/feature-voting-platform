@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\PermissionEnum;
 use App\Http\Resources\FeatureResource;
 use App\Http\Resources\UsersResource;
 use App\Models\Feature;
@@ -23,7 +24,7 @@ class FeatureController extends Controller
         $currentUserId=Auth::id();
 
 
-        $features =Feature::orderByDesc("id")
+        $features =Feature::with("user")->orderByDesc("id")
         ->withCount(["upVotes"=>function ($query){
             $query->select(DB::raw("SUM(CASE WHEN upvote=1 THEN 1 else -1 END)"));
 
@@ -46,7 +47,8 @@ class FeatureController extends Controller
         return Inertia::render("Feature/Index",[
             "features"=>Inertia::merge(FeatureResource::collection($features)->collection->toArray()),
             "canCreate"=>$request->user()?->can("create",Feature::class) ?? false,
-            "page"=>$features->currentPage()
+            "page"=>$features->currentPage(),
+            "lastPage"=>$features->lastPage(),
         ]);
     }
 
@@ -77,7 +79,7 @@ return redirect()->route("feature.create")->with("success","has been created new
     /**
      * Display the specified resource.
      */
-    public function show(Feature $feature)
+    public function show(Request $request,Feature $feature)
     {
         $currentUserId=Auth::id();
         $feature->user_upVote= Upvotes::where("feature_id",$feature->id)
@@ -96,6 +98,7 @@ return redirect()->route("feature.create")->with("success","has been created new
                 "comment"=>$comment->comment,
                 "created_at"=>$comment->created_at->diffForHumans(),
                 "user"=> new UsersResource($comment->user),
+                "can_delete"=>$comment->user_id==$currentUserId || $request->user()?->can(PermissionEnum::ManageFeatures->value),
             ])
 
         ]);

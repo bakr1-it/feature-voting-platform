@@ -29,7 +29,7 @@ export default function show({feature , comments}:{feature:Feature,comments:Comm
             }
             {comments && <div className="mt-8">
               {comments.map(comment => (
-                  <CommentItems comment={comment} key={comment.id} feature={feature} />
+                  <CommentItems comment={comment} key={comment.id}  />
                 ))}
             </div>}
           </div>

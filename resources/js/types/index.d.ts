@@ -23,6 +23,7 @@ export type Comments={
     user:User,
     created_at:string,
     id:number,
+    can_delete:boolean
 
 }
 type LinkType ={
