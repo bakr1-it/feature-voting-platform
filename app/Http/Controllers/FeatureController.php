@@ -44,8 +44,9 @@ class FeatureController extends Controller
         ->paginate();
 
         return Inertia::render("Feature/Index",[
-            "features"=>FeatureResource::collection($features),
-            "canCreate"=>$request->user()?->can("create",Feature::class) ?? false
+            "features"=>Inertia::merge(FeatureResource::collection($features)->collection->toArray()),
+            "canCreate"=>$request->user()?->can("create",Feature::class) ?? false,
+            "page"=>$features->currentPage()
         ]);
     }
 
@@ -70,7 +71,7 @@ class FeatureController extends Controller
         $data["user_id"]=Auth::id();
         $created= Feature::create($data);
         if($created)
-return Inertia::render("Feature/create");
+return redirect()->route("feature.create")->with("success","has been created new feature his name is " . $data["name"]);
             }
 
     /**
@@ -123,7 +124,7 @@ return Inertia::render("Feature/create");
         ]);
 
         $feature->update($data);
-        return to_route("feature.edit",$feature);
+        return redirect()->route("feature.edit",$feature)->with("success","has been update feature success his name is ". $feature->name);
     }
 
     /**
@@ -134,7 +135,7 @@ return Inertia::render("Feature/create");
         Gate::authorize("delete",$feature);
         $deleted= $feature->delete();
         if($deleted)
-            return to_route("feature.index")->with("success","delete feature is success");
+            return redirect()->route("feature.index")->with("success","has been deleted Feature is success is name " . $feature->name);
 
 
 

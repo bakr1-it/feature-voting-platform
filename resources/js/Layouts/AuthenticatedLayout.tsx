@@ -39,12 +39,14 @@ export default function Authenticated({
                                 >
                                     Features
                                 </NavLink>
+                                {user.roles.includes("admin") &&
                                 <NavLink
-                                    href={route('user.index')}
-                                    active={route().current('user.index')}
+                                href={route('user.index')}
+                                active={route().current('user.index')}
                                 >
                                     Users
                                 </NavLink>
+                                }
                             </div>
                         </div>
 

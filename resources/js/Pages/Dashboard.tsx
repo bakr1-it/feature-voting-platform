@@ -15,10 +15,20 @@ export default function Dashboard() {
 
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
-                            You're logged in!
-                        </div>
+<div>
+    <h2 className="text-xl font-semibold mb-2">
+        Welcome to the Feature Request & Voting Platform!
+    </h2>
+
+    <p className="text-gray-400 leading-relaxed">
+        Share your ideas, suggest new features, and help shape
+        the future of the platform. Vote on feature requests,
+        join discussions, and collaborate with the community
+        to turn great ideas into reality.
+    </p>
+</div>                        </div>
                     </div>
-           
+
         </AuthenticatedLayout>
     );
 }

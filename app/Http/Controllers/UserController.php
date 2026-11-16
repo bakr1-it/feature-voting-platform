@@ -31,7 +31,7 @@ class UserController extends Controller
 
         $user->syncRoles($data['roles']);
 
-        return back()->with('success', 'Roles updated successfully.');
+        return back()->with('success', 'Roles updated successfully for user is ' . $user->name);
     }
 
 }

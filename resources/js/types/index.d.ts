@@ -55,4 +55,7 @@ export type PageProps<
         user: AuthUser;
     };
     ziggy: Config & { location: string };
+    flash:{
+        success:string | null,
+    }
 };

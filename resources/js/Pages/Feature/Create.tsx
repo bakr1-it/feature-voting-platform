@@ -1,20 +1,28 @@
 import TeaxtAreaInput from '@/Components/App/TeaxtAreaInput';
+import Toast from '@/Components/App/Toast';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm } from '@inertiajs/react';
-import { SyntheticEvent } from 'react';
+import { Head, useForm, usePage } from '@inertiajs/react';
+import { SyntheticEvent, useState } from 'react';
 export default function Create() {
-    const {data,setData,processing , post , errors}= useForm({
+    const {flash} = usePage().props;
+    const [isShowToast,setIsShowToast]=useState(false);
+    const {data,setData,processing , post , errors,reset}= useForm({
         name:"",
         description:""
     })
     const handelSubmitForm = (ev:SyntheticEvent)=>{
     ev.preventDefault();
     post(route("feature.store",data),{
-        preserveScroll:true
+        preserveScroll:true,
+        onSuccess :()=>{
+            setIsShowToast(true);
+            reset();
+
+        }
     })
     }
 
@@ -27,7 +35,7 @@ export default function Create() {
             }
         >
             <Head title="Create New Feature "    />
-
+<Toast isShow={isShowToast} message={flash.success} setIsShow={()=>setIsShowToast(false)}/>
   <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 mb-4">
                         <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8">
       <form action="" onSubmit={handelSubmitForm} method="post" className='w-full'>

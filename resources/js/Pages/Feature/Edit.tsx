@@ -1,22 +1,29 @@
 import TeaxtAreaInput from '@/Components/App/TeaxtAreaInput';
+import Toast from '@/Components/App/Toast';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Feature } from '@/types';
-import { Head, useForm } from '@inertiajs/react';
-import { SyntheticEvent } from 'react';
+import { Head, useForm, usePage } from '@inertiajs/react';
+import { SyntheticEvent, useState } from 'react';
 
 export default function Edit({feature}:{feature:Feature}) {
-        const {data,setData,processing , put , errors}= useForm({
+        const [isShowToast,setIsShowToast]=useState(false);
+        const {flash} = usePage().props;
+        const {data,setData,processing , put , errors,reset}= useForm({
         name:feature.name,
         description:feature.description
     })
         const handelSubmitForm = (ev:SyntheticEvent)=>{
         ev.preventDefault();
         put(route("feature.update",feature),{
-            preserveScroll:true
+            preserveScroll:true,
+                         onSuccess :()=>{
+            setIsShowToast(true);
+
+        }
         })
         }
   return (
@@ -28,6 +35,7 @@ export default function Edit({feature}:{feature:Feature}) {
             }
         >
             <Head title="Create New Feature "    />
+<Toast isShow={isShowToast} message={flash.success} setIsShow={()=>setIsShowToast(false)}/>
 
   <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 mb-4">
                         <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8">

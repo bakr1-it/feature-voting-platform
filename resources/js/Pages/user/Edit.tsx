@@ -1,19 +1,22 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, useForm} from '@inertiajs/react';
+import {Head, useForm, usePage} from '@inertiajs/react';
 import {AuthUser} from "@/types";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
-import {FormEventHandler} from "react";
+import {FormEventHandler, useState} from "react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Radio from "@/Components/Radio";
+import Toast from '@/Components/App/Toast';
 
 export default function Show({roles, user, roleLabels}: {
+
   roles: any, user: AuthUser, roleLabels: Record<string, string>
 }) {
 
   const {
     data,
+    reset,
     setData,
     processing,
     errors,
@@ -23,13 +26,19 @@ export default function Show({roles, user, roleLabels}: {
     email: user.email,
     roles: user.roles,
   })
+    const [isShowToast,setIsShowToast]=useState(false);
+    const {flash} = usePage().props;
 
 
   const updateUser: FormEventHandler = (ev) => {
     ev.preventDefault();
 
     put(route('user.update', user.id), {
-      preserveScroll: true
+      preserveScroll: true,
+             onSuccess :()=>{
+            setIsShowToast(true);
+
+        }
     })
   }
 
@@ -48,7 +57,7 @@ export default function Show({roles, user, roleLabels}: {
       }
     >
       <Head title={'Edit User ' + user.name}/>
-
+<Toast isShow={isShowToast} message={flash.success} setIsShow={()=>setIsShowToast(false)}/>
       <div className="mb-4 overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
         <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8">
           <form onSubmit={updateUser} className="w-full">
