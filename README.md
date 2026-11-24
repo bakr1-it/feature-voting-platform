@@ -1,58 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Feature Voting Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-stack platform for collecting feature requests, prioritizing ideas through community voting, and managing discussions with role-based access control.
 
-## About Laravel
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=flat-square&logo=laravel&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Inertia.js](https://img.shields.io/badge/Inertia.js-9553E9?style=flat-square)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The platform helps software teams collect user feedback and make informed product decisions. Users can submit feature requests, vote on ideas, and participate in discussions according to their permissions.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+- User registration, authentication, and email verification.
+- Feature request creation, browsing, editing, and deletion subject to authorization.
+- Upvoting and downvoting feature requests.
+- Comment management with permission-based access.
+- User and role management.
+- Server-side authorization using Laravel policies and Spatie Laravel Permission.
+- Toast notifications for application feedback.
+- React and TypeScript frontend integrated with Laravel through Inertia.js.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Technology Stack
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Layer | Technologies |
+| --- | --- |
+| Backend | PHP, Laravel, Eloquent ORM |
+| Frontend | React, TypeScript, Tailwind CSS |
+| Integration | Inertia.js |
+| Authorization | Laravel Policies, Spatie Laravel Permission |
+| Build tooling | Vite, Composer, npm |
+| Rendering | Inertia SSR architecture |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Architecture
 
-## Agentic Development
+The application uses Laravel as the backend and React as the presentation layer. Inertia.js connects both layers without requiring a separate REST API for page navigation.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```mermaid
+flowchart TD
+    A[Browser] --> B[Laravel Routes and Middleware]
+    B --> C[Controllers]
+    C --> D[Policies and Authorization]
+    C --> E[Eloquent ORM]
+    E --> F[(Database)]
+    C --> G[Inertia Page Response]
+    G --> H[React and TypeScript Pages]
+    G -. Initial SSR when enabled .-> I[SSR Server]
+    I --> A
+    H --> A
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Getting Started
 
-## Contributing
+### Prerequisites
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- PHP and Composer
+- Node.js and npm
+- A database supported by the application configuration
 
-## Code of Conduct
+Check `composer.json` and `package.json` for the project's dependency and runtime requirements.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Local Installation
 
-## Security Vulnerabilities
+Clone this repository using its GitHub clone URL, then open a terminal in the project directory.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+composer install
+npm ci
+```
 
-## License
+Create the local environment file:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+cp .env.example .env
+```
+
+On Windows PowerShell, use `Copy-Item .env.example .env` instead.
+
+Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+Configure the database connection in `.env`, then run:
+
+```bash
+php artisan migrate
+```
+
+If the project provides seeders for roles and permissions, review them before running the appropriate seeding command.
+
+### Run the Application
+
+Start Laravel in one terminal:
+
+```bash
+php artisan serve
+```
+
+Start Vite in a second terminal:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:8000](http://localhost:8000).
+
+### Server-Side Rendering
+
+Inertia SSR allows the initial React page to be rendered on the server before client-side hydration. Subsequent Inertia navigation can update the page without a full browser reload.
+
+SSR requires a configured server entry point, a compatible build script, and a running SSR process. Consult the project's Vite configuration and npm scripts before enabling it in production.
+
+## Security
+
+- Authentication identifies users, while authorization controls permitted actions.
+- Laravel policies and role-based permissions enforce access on the backend.
+- Frontend permission checks improve the user experience but do not replace backend authorization.
+- Environment variables and credentials must remain outside version control.
+- Configure mail credentials locally when testing email verification.
+
+## Testing
+
+Run the configured Laravel test suite with:
+
+```bash
+php artisan test
+```
+
+Recommended coverage includes authentication, feature ownership, voting behavior, comment permissions, and administrative access.
+
+## Deployment Roadmap
+
+- [ ] Deploy the application to a VPS.
+- [ ] Configure the production database and environment.
+- [ ] Build frontend assets and verify SSR in production.
+- [ ] Configure HTTPS and the web server.
+- [ ] Automate deployment using GitHub Actions.
+
+## Author
+
+Developed by [bakr1-it](https://github.com/bakr1-it).
